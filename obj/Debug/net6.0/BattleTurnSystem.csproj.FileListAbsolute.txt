@@ -1,0 +1,15 @@
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/bin/Debug/net6.0/BattleTurnSystem
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/bin/Debug/net6.0/BattleTurnSystem.deps.json
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/bin/Debug/net6.0/BattleTurnSystem.runtimeconfig.json
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/bin/Debug/net6.0/BattleTurnSystem.dll
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/bin/Debug/net6.0/BattleTurnSystem.pdb
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.csproj.AssemblyReference.cache
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.GeneratedMSBuildEditorConfig.editorconfig
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.AssemblyInfoInputs.cache
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.AssemblyInfo.cs
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.csproj.CoreCompileInputs.cache
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.dll
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/refint/BattleTurnSystem.dll
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.pdb
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/BattleTurnSystem.genruntimeconfig.cache
+/Users/paulnowak/Desktop/Algosup studies/Sandbox/BattleTurnSystem/obj/Debug/net6.0/ref/BattleTurnSystem.dll
