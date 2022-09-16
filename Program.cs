@@ -1,2 +1,2 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("BATTLE BEGINS !!");
+Console.WriteLine("LET'S THE BATTLE BEGINS !!");
