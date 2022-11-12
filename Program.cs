@@ -65,7 +65,7 @@ void BattleMode()
                 Console.WriteLine("Dude 1 attack Dude 2!");
                 Thread.Sleep(1000);
                 Console.WriteLine("Dude 2 is hurt !");
-                order = 2;
+                OrderSwitch();
                 Console.Clear();
             }
 
@@ -96,7 +96,7 @@ void BattleMode()
                 Console.WriteLine("Dude 2 attack Dude 1!");
                 Thread.Sleep(1000);
                 Console.WriteLine("Dude 1 is hurt !");
-                order = 1;
+                OrderSwitch();
                 Console.Clear();
             }
 
@@ -116,6 +116,19 @@ void BattleMode()
         }
       
     }    
+}
+
+void OrderSwitch()
+{
+    if (order == 1)
+    {
+        order = 2;
+    }
+
+    else if (order == 2)
+    {
+        order = 1;
+    }
 }
 
 void QuitFight()
