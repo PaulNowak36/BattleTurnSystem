@@ -23,8 +23,9 @@ void Beginning()
 
         else if (touchPress.Key == ConsoleKey.Q)
         {
-            Console.WriteLine("No fight.");
-            return;
+            //Console.WriteLine("No fight.");
+            //return;
+            QuitFight();
         }
 
         else
@@ -70,8 +71,9 @@ void BattleMode()
 
             else if (battlePress.Key == ConsoleKey.Q && order == 1)
             {
-                Console.WriteLine("No fight.");
-                return;
+                //Console.WriteLine("No fight.");
+                //return;
+                QuitFight();
             }
 
             else
@@ -100,8 +102,10 @@ void BattleMode()
 
             else if (battlePress.Key == ConsoleKey.Q && order == 2)
             {
-                Console.WriteLine("No fight.");
-                return;
+                //Console.WriteLine("No fight.");
+                //return;
+
+                QuitFight();
             }
 
             else
@@ -112,6 +116,12 @@ void BattleMode()
         }
       
     }    
+}
+
+void QuitFight()
+{
+    Console.WriteLine("No fight.");
+    Environment.Exit(0);
 }
 
 void Nothing() 
