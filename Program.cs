@@ -16,6 +16,7 @@ void Beginning()
     while (battleHasStarted == false)
     {
         var touchPress = Console.ReadKey(true);
+        pressKey(touchPress);
 
         if (touchPress.Key == ConsoleKey.A)
         { 
@@ -41,86 +42,76 @@ void Beginning()
 
 void BattleMode()
 
-{
-    
+{    
     Text("LET'S THE BATTLE BEGINS !!");
     Text($"{characters[0]} VS {characters[1]}");
 
-    order = 1;
+    order = 0;
     actionIsUsed = false;
 
     while (battleHasStarted == true)
     {
-        
-        if (order == 1)
+        actionIsUsed = false;
+        if (order == 0)
         {
-            actionIsUsed = false;
             Text($"{characters[0]}'s turn !");
-            var battlePress = Console.ReadKey(true);
-
-            if (battlePress.Key == ConsoleKey.A && order == 1 && actionIsUsed == false)
-            { 
-                actionIsUsed = true;
-                Console.Clear();
-                Text($"{characters[0]} attack {characters[1]}!");
-                Thread.Sleep(1000);
-                Text($"{characters[1]} is hurt !");
-                OrderSwitch();
-                Console.Clear();
-            }
-
-            else if (battlePress.Key == ConsoleKey.Q && order == 1)
-            {
-                QuitFight();
-            }
-
-            else
-            {
-                Nothing();
-            }
         }
 
-        if (order == 2)
+        else if (order == 1)
         {
-            actionIsUsed = false;
-            Text($"{characters[1]}'s turn !");
-            var battlePress = Console.ReadKey(true);
-
-            if (battlePress.Key == ConsoleKey.A && order == 2 && actionIsUsed == false)
-            { 
-                actionIsUsed = true;
-                Console.Clear();
-                Text($"{characters[1]} attack {characters[0]}!");
-                Thread.Sleep(1000);
-                Text($"{characters[0]} is hurt !");
-                OrderSwitch();
-                Console.Clear();
-            }
-
-            else if (battlePress.Key == ConsoleKey.Q && order == 2)
-            {
-                QuitFight();
-            }
-
-            else
-            {
-                Nothing();
-            }
+            Text($"{characters[1]}'s turn !");           
         }
-      
+        var battlePress = Console.ReadKey(true);
+
+        if (battlePress.Key == ConsoleKey.A && actionIsUsed == false)
+        {
+            Attack();
+        }
+
+        else if (battlePress.Key == ConsoleKey.Q)
+        {
+            QuitFight();
+        }
+
+        else
+        {
+            Nothing();
+        }       
     }    
+}
+
+void Attack()
+{
+    actionIsUsed = true;
+    Console.Clear();
+    if (order == 0)
+    {
+        Text($"{characters[0]} attack {characters[1]}!");
+        Thread.Sleep(1000);
+        Text($"{characters[1]} is hurt !");
+    }
+    else if (order == 1)
+    {
+        Text($"{characters[1]} attack {characters[0]}!");
+        Thread.Sleep(1000);
+        Text($"{characters[0]} is hurt !");
+    }
+    OrderSwitch();
+    Console.Clear();
+    actionIsUsed = false;
+
 }
 
 void OrderSwitch()
 {
-    if (order == 1)
-    {
-        order = 2;
-    }
-
-    else if (order == 2)
+    if (order == 0)
     {
         order = 1;
+    }
+
+    else if (order == 1)
+    {
+        order = 0;
     }
 }
 
@@ -146,4 +137,10 @@ void Nothing()
 void Text(string text) {
     Console.WriteLine(text);
 }
+
+void pressKey(ConsoleKeyInfo key) {
+    Text(Convert.ToString(key.Key));
+}
+
+
     
