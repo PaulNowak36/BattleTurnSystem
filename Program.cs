@@ -5,8 +5,13 @@ int opponent;
 bool battleHasStarted = false;
 bool actionIsUsed = false;
 
+bool validNames = false;
+
 string[] characters = {"Dude 1", "Dude 2"};
+
+List<String> newCharacters= new List<String>();
 newBeginning();
+
 
 void newBeginning()
 {
@@ -26,7 +31,7 @@ void newBeginning()
             case ConsoleKey.A:
                 battleHasStarted = true;
                 Console.Clear();
-                newBattleMode();
+                setCharactersNames();
                 break;
             case ConsoleKey.Q:
                 QuitFight();
@@ -37,10 +42,41 @@ void newBeginning()
 
 }
 
+void setCharactersNames()
+{
+    while(validNames == false)
+    {
+        Text("Please type the name of the character 1:");
+        string name1 = Console.ReadLine();
+
+        newCharacters.Add(name1);
+
+        Text("Please type the name of the character 2:");
+        string name2 = Console.ReadLine();
+
+        newCharacters.Add(name2);
+
+        if (name1 != name2)
+        {
+            validNames = true;
+        }
+
+        else
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Text("Please, choose different names for both characters.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+    }
+
+    newBattleMode();
+}
+
 void newBattleMode()
 {
     Text("LET'S THE BATTLE BEGINS !!");
-    Text($"{characters[0]} VS {characters[1]}");
+    Text($"{newCharacters[0]} VS {newCharacters[1]}");
 
     order = 0;
     opponent = 1;
@@ -50,7 +86,7 @@ void newBattleMode()
     {
         actionIsUsed = false;
      
-        Text($"{characters[order]}'s turn !");           
+        Text($"{newCharacters[order]}'s turn !");           
         
         Console.ForegroundColor = ConsoleColor.Blue;
         Text("A) Attack");
@@ -80,9 +116,9 @@ void newAttack()
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.White;
 
-    Text($"{characters[order]} attack {characters[opponent]}!");
+    Text($"{newCharacters[order]} attack {newCharacters[opponent]}!");
     Thread.Sleep(1000);
-    Text($"{characters[opponent]} is hurt !");
+    Text($"{newCharacters[opponent]} is hurt !");
     Thread.Sleep(1000);
 
     newOrderSwitch();
