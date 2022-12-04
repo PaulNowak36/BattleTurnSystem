@@ -9,11 +9,15 @@ bool validNames = false;
 
 string[] characters = {"Dude 1", "Dude 2"};
 
-List<String> newCharacters= new List<String>();
-newBeginning();
+List<Character> CharacterRoster= new List<Character>();
+
+Character char1 = new Character();
+Character char2 = new Character();
 
 
-void newBeginning()
+Beginning();
+
+void Beginning()
 {
     Console.Clear();
     Text("It is time to battle !");
@@ -31,7 +35,7 @@ void newBeginning()
             case ConsoleKey.A:
                 battleHasStarted = true;
                 Console.Clear();
-                setCharactersNames();
+                CreateCharacters();
                 break;
             case ConsoleKey.Q:
                 QuitFight();
@@ -42,21 +46,14 @@ void newBeginning()
 
 }
 
-void setCharactersNames()
+void CreateCharacters()
 {
     while(validNames == false)
     {
-        Text("Please type the name of the character 1:");
-        string name1 = Console.ReadLine();
+        SetCharacter(char1);
+        SetCharacter(char2);
 
-        newCharacters.Add(name1);
-
-        Text("Please type the name of the character 2:");
-        string name2 = Console.ReadLine();
-
-        newCharacters.Add(name2);
-
-        if (name1 != name2)
+        if (char1.name != char2.name)
         {
             validNames = true;
         }
@@ -64,19 +61,30 @@ void setCharactersNames()
         else
         {
             Console.Clear();
+            CharacterRoster.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Text("Please, choose different names for both characters.");
             Console.ForegroundColor = ConsoleColor.White;
         }
     }
 
-    newBattleMode();
+    BattleMode();
 }
 
-void newBattleMode()
+void SetCharacter(Character character)
+{
+    character.characterNumber = CharacterRoster.Count + 1;
+    Text($"Please type the name of the character {character.characterNumber}:");
+    character.name = Console.ReadLine();
+    CharacterRoster.Add(character);
+}
+
+
+
+void BattleMode()
 {
     Text("LET'S THE BATTLE BEGINS !!");
-    Text($"{newCharacters[0]} VS {newCharacters[1]}");
+    Text($"{CharacterRoster[0].name} VS {CharacterRoster[1].name}");
 
     order = 0;
     opponent = 1;
@@ -86,7 +94,7 @@ void newBattleMode()
     {
         actionIsUsed = false;
      
-        Text($"{newCharacters[order]}'s turn !");           
+        Text($"{CharacterRoster[order].name}'s turn !");           
         
         Console.ForegroundColor = ConsoleColor.Blue;
         Text("A) Attack");
@@ -100,7 +108,7 @@ void newBattleMode()
             switch (battlePress.Key)
             {
                 case ConsoleKey.A:
-                    newAttack();
+                    Attack();
                     break;
                 case ConsoleKey.Q:
                     QuitFight();
@@ -110,23 +118,23 @@ void newBattleMode()
     }    
 }
 
-void newAttack()
+void Attack()
 {
     actionIsUsed = true;
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.White;
 
-    Text($"{newCharacters[order]} attack {newCharacters[opponent]}!");
+    Text($"{CharacterRoster[order].name} attack {CharacterRoster[opponent].name}!");
     Thread.Sleep(1000);
-    Text($"{newCharacters[opponent]} is hurt !");
+    Text($"{CharacterRoster[opponent].name} is hurt !");
     Thread.Sleep(1000);
 
-    newOrderSwitch();
+    OrderSwitch();
     Console.Clear();
     actionIsUsed = false;
 }
 
-void newOrderSwitch()
+void OrderSwitch()
 {
     (order, opponent) = (opponent, order);
 }
@@ -146,5 +154,9 @@ void Text(string text) {
     Text(Convert.ToString(key.Key));
 } */
 
+public class Character{
+    public string name {get; set;}
+    public int characterNumber;
+}
 
     
