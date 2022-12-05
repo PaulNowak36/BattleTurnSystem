@@ -73,15 +73,44 @@ void CreateCharacters()
 
 void SetCharacter(Character character)
 {
+    Console.Clear();
     character.characterNumber = CharacterRoster.Count + 1;
     
     Text($"Please type the name of the character {character.characterNumber}:");
     character.name = Console.ReadLine();
+
+    Text("Set his dammage:");
+    var dammageInput = Console.ReadLine();
+    if (int.TryParse(dammageInput, out int value))
+    {
+        character.dammage = Convert.ToInt32(dammageInput);
+    }
     
-    character.dammage = character.defaultDammage;
-    character.HP = character.defaultHP;
+    else
+    {
+        character.dammage = character.defaultDammage;
+        Text($"Let's say that he has {character.dammage}, ok ?");
+        Thread.Sleep(1000);
+
+    }
+
+    Text("Set his HP:");
+    var HPInput = Console.ReadLine();
+    if (int.TryParse(HPInput, out int value2))
+    {
+        character.HP = Convert.ToInt32(HPInput);
+    }
+    
+    else
+    {
+        character.HP = character.defaultHP;
+        Text($"Let's say that he has {character.HP}, ok ?");
+        Thread.Sleep(1000);
+    }
 
     CharacterRoster.Add(character);
+    Thread.Sleep(1000);
+
 }
 
 void BattleMode()
@@ -93,7 +122,7 @@ void BattleMode()
     order = 0;
     opponent = 1;
     actionIsUsed = false;
-    Thread.Sleep(1000);
+    Thread.Sleep(2000);
 
 
     while (battleHasStarted == true)
