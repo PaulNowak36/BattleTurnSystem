@@ -4,6 +4,7 @@ int order;
 int opponent;
 bool battleHasStarted = false;
 bool actionIsUsed = false;
+bool playerDown = false;
 
 bool validNames = false;
 
@@ -13,7 +14,6 @@ List<Character> CharacterRoster= new List<Character>();
 
 Character char1 = new Character();
 Character char2 = new Character();
-
 
 Beginning();
 
@@ -74,27 +74,39 @@ void CreateCharacters()
 void SetCharacter(Character character)
 {
     character.characterNumber = CharacterRoster.Count + 1;
+    
     Text($"Please type the name of the character {character.characterNumber}:");
     character.name = Console.ReadLine();
+    
+    character.dammage = character.defaultDammage;
+    character.HP = character.defaultHP;
+
     CharacterRoster.Add(character);
 }
 
-
-
 void BattleMode()
 {
+    Console.Clear();
     Text("LET'S THE BATTLE BEGINS !!");
     Text($"{CharacterRoster[0].name} VS {CharacterRoster[1].name}");
 
     order = 0;
     opponent = 1;
     actionIsUsed = false;
+    Thread.Sleep(1000);
+
 
     while (battleHasStarted == true)
     {
+        Console.Clear();
         actionIsUsed = false;
      
-        Text($"{CharacterRoster[order].name}'s turn !");           
+        Text($"{CharacterRoster[order].name}'s turn !");
+        Console.WriteLine();
+        Text($"Dammage: {CharacterRoster[order].dammage}");           
+        Text($"HP: {CharacterRoster[order].HP}");           
+        Console.WriteLine();
+        
         
         Console.ForegroundColor = ConsoleColor.Blue;
         Text("A) Attack");
@@ -126,17 +138,43 @@ void Attack()
 
     Text($"{CharacterRoster[order].name} attack {CharacterRoster[opponent].name}!");
     Thread.Sleep(1000);
-    Text($"{CharacterRoster[opponent].name} is hurt !");
+    Text($"{CharacterRoster[opponent].name} loose {CharacterRoster[order].dammage} HP !");
     Thread.Sleep(1000);
+    CharacterRoster[opponent].HP -= CharacterRoster[order].dammage;
 
-    OrderSwitch();
-    Console.Clear();
-    actionIsUsed = false;
+    if (CharacterRoster[opponent].HP <= 0)
+    {
+        playerDown = true;
+        Victory();
+    }
+
+    else
+    {
+        OrderSwitch();
+        Console.Clear();
+        actionIsUsed = false;
+    }
+    
 }
 
 void OrderSwitch()
 {
     (order, opponent) = (opponent, order);
+}
+
+void Victory()
+{
+    if(playerDown)
+    {
+        battleHasStarted = false;
+        Console.Clear();
+
+        Text($"{CharacterRoster[opponent].name} is K.O. !");
+        Thread.Sleep(1000);
+        Text($"Victory of {CharacterRoster[order].name}!");
+        Thread.Sleep(1000);
+        Environment.Exit(0);
+    }
 }
 
 void QuitFight()
@@ -157,6 +195,12 @@ void Text(string text) {
 public class Character{
     public string name {get; set;}
     public int characterNumber;
+    public int dammage;
+    public int HP;
+
+    public int defaultDammage = 5;
+    public int defaultHP = 20;
+
 }
 
     
