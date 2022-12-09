@@ -6,14 +6,24 @@ bool battleHasStarted = false;
 bool actionIsUsed = false;
 bool playerDown = false;
 
-bool validNames = false;
+bool jobDecision = false;
+bool jobChoice = false;
 
-string[] characters = {"Dude 1", "Dude 2"};
+
+bool validNames = false;
 
 List<Character> CharacterRoster= new List<Character>();
 
 Character char1 = new Character();
 Character char2 = new Character();
+
+Character char3 = new Character();
+/* char3.Job = new Knight();
+char3.dammage = char3.Job.JobDammage;
+char3.HP = char3.Job.JobHP;
+
+Text($"This character is a {char3.Job.JobName} which deals {char3.dammage} dammages and has {char3.HP} HP."); */
+
 
 Beginning();
 
@@ -73,12 +83,68 @@ void CreateCharacters()
 
 void SetCharacter(Character character)
 {
+    jobDecision = false;
     Console.Clear();
     character.characterNumber = CharacterRoster.Count + 1;
     
     Text($"Please type the name of the character {character.characterNumber}:");
     character.name = Console.ReadLine();
 
+    Text("Do you want him to have a class ?");
+    Text("Y for Yes");
+    Text("N for No");
+
+    while (jobDecision == false)
+    {
+        var touchPress = Console.ReadKey(true);            
+        switch (touchPress.Key)
+        {
+            case ConsoleKey.Y:
+                jobDecision = true;
+                SetJob(character);           
+                break;
+            case ConsoleKey.N:
+                jobDecision = true;
+                SetJobless(character);
+                break;
+        }
+    }
+
+    CharacterRoster.Add(character);
+    Thread.Sleep(1000);
+
+}
+
+void SetJob(Character character)
+{
+    jobChoice = false;
+    Text("Choose your Job: ");
+    Text("K for Knight");
+    Text("W for Wizard");
+    
+    while (jobChoice == false)
+    {
+        var touchPress = Console.ReadKey(true);            
+        switch (touchPress.Key)
+        {
+            case ConsoleKey.K:
+                jobChoice = true;
+                character.Job = new Knight();
+                break;
+            case ConsoleKey.W:
+                jobChoice = true;
+                character.Job = new Wizard(); 
+                break;
+        }
+    }
+    character.dammage = character.Job.JobDammage;
+    character.HP = character.Job.JobHP;
+
+
+}
+
+void SetJobless(Character character)
+{
     Text("Set his dammage:");
     var dammageInput = Console.ReadLine();
     if (int.TryParse(dammageInput, out int value))
@@ -107,10 +173,6 @@ void SetCharacter(Character character)
         Text($"Let's say that he has {character.HP}, ok ?");
         Thread.Sleep(1000);
     }
-
-    CharacterRoster.Add(character);
-    Thread.Sleep(1000);
-
 }
 
 void BattleMode()
@@ -129,6 +191,8 @@ void BattleMode()
     {
         Console.Clear();
         actionIsUsed = false;
+        Console.ForegroundColor = ConsoleColor.White;
+
      
         Text($"{CharacterRoster[order].name}'s turn !");
         Console.WriteLine();
@@ -230,6 +294,30 @@ public class Character{
     public int defaultDammage = 5;
     public int defaultHP = 20;
 
+   public CharacterJob Job;
+
 }
 
-    
+public abstract class CharacterJob {
+    public abstract string JobName { get; } 
+    public abstract int JobDammage { get; } 
+    public abstract int JobHP { get; } 
+}
+
+public class Knight : CharacterJob
+{
+    public override string JobName => "Knight";
+
+    public override int JobDammage => 10;
+    public override int JobHP => 50;
+
+}
+
+public class Wizard : CharacterJob
+{
+    public override string JobName => "Wizard";
+
+    public override int JobDammage => 13;
+    public override int JobHP => 40;
+
+}
