@@ -17,14 +17,6 @@ List<Character> CharacterRoster= new List<Character>();
 Character char1 = new Character();
 Character char2 = new Character();
 
-Character char3 = new Character();
-/* char3.Job = new Knight();
-char3.dammage = char3.Job.JobDammage;
-char3.HP = char3.Job.JobHP;
-
-Text($"This character is a {char3.Job.JobName} which deals {char3.dammage} dammages and has {char3.HP} HP."); */
-
-
 Beginning();
 
 void Beginning()
@@ -139,6 +131,7 @@ void SetJob(Character character)
     }
     character.dammage = character.Job.JobDammage;
     character.HP = character.Job.JobHP;
+    character.SP = character.Job.JobSP;
 
 
 }
@@ -155,9 +148,8 @@ void SetJobless(Character character)
     else
     {
         character.dammage = character.defaultDammage;
-        Text($"Let's say that he has {character.dammage}, ok ?");
+        Text($"Let's say that he has {character.dammage} dammage, ok ?");
         Thread.Sleep(1000);
-
     }
 
     Text("Set his HP:");
@@ -170,7 +162,21 @@ void SetJobless(Character character)
     else
     {
         character.HP = character.defaultHP;
-        Text($"Let's say that he has {character.HP}, ok ?");
+        Text($"Let's say that he has {character.HP} HP, ok ?");
+        Thread.Sleep(1000);
+    }
+
+    Text("Set his SP:");
+    var SPInput = Console.ReadLine();
+    if (int.TryParse(HPInput, out int value3))
+    {
+        character.SP = Convert.ToInt32(SPInput);
+    }
+    
+    else
+    {
+        character.SP = character.defaultSP;
+        Text($"Let's say that he has {character.SP} SP, ok ?");
         Thread.Sleep(1000);
     }
 }
@@ -186,7 +192,6 @@ void BattleMode()
     actionIsUsed = false;
     Thread.Sleep(2000);
 
-
     while (battleHasStarted == true)
     {
         Console.Clear();
@@ -197,12 +202,13 @@ void BattleMode()
         Text($"{CharacterRoster[order].name}'s turn !");
         Console.WriteLine();
         Text($"Dammage: {CharacterRoster[order].dammage}");           
-        Text($"HP: {CharacterRoster[order].HP}");           
+        Text($"HP: {CharacterRoster[order].HP}"); 
+        Text($"SP: {CharacterRoster[order].SP}");           
         Console.WriteLine();
-        
         
         Console.ForegroundColor = ConsoleColor.Blue;
         Text("A) Attack");
+        Text("H) Heal");
         Text("Q) Quit the game");     
 
         if (actionIsUsed == false)
@@ -215,6 +221,21 @@ void BattleMode()
                 case ConsoleKey.A:
                     Attack();
                     break;
+                case ConsoleKey.H:
+                    if(CharacterRoster[order].SP < 5)
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Text("No enough SP for this.");
+                        Thread.Sleep(3000);
+
+                        break;
+                    }
+                    else
+                    {
+                        Heal();
+                        break;
+                    }
                 case ConsoleKey.Q:
                     QuitFight();
                     break;
@@ -231,7 +252,7 @@ void Attack()
 
     Text($"{CharacterRoster[order].name} attack {CharacterRoster[opponent].name}!");
     Thread.Sleep(1000);
-    Text($"{CharacterRoster[opponent].name} loose {CharacterRoster[order].dammage} HP !");
+    Text($"{CharacterRoster[opponent].name} loses {CharacterRoster[order].dammage} HP !");
     Thread.Sleep(1000);
     CharacterRoster[opponent].HP -= CharacterRoster[order].dammage;
 
@@ -248,6 +269,25 @@ void Attack()
         actionIsUsed = false;
     }
     
+}
+
+void Heal()
+{
+    actionIsUsed = true;
+    Console.Clear();
+    Console.ForegroundColor = ConsoleColor.White;
+   
+    Text($"{CharacterRoster[order].name} heals himself!");
+    Thread.Sleep(1000);
+    Text("He uses 5 SP and gains 15 HP !");
+    Thread.Sleep(1000);
+    CharacterRoster[order].SP -= 5;
+    CharacterRoster[order].HP += 15;
+
+    OrderSwitch();
+    Console.Clear();
+    actionIsUsed = false;
+
 }
 
 void OrderSwitch()
@@ -291,8 +331,13 @@ public class Character{
     public int dammage;
     public int HP;
 
+    public int SP;
+
     public int defaultDammage = 5;
     public int defaultHP = 20;
+
+    public int defaultSP = 10;
+
 
    public CharacterJob Job;
 
@@ -301,23 +346,26 @@ public class Character{
 public abstract class CharacterJob {
     public abstract string JobName { get; } 
     public abstract int JobDammage { get; } 
-    public abstract int JobHP { get; } 
+    public abstract int JobHP { get; }
+    public abstract int JobSP { get; } 
+
 }
 
 public class Knight : CharacterJob
 {
     public override string JobName => "Knight";
-
     public override int JobDammage => 10;
     public override int JobHP => 50;
+    public override int JobSP => 15;
+
 
 }
 
 public class Wizard : CharacterJob
 {
     public override string JobName => "Wizard";
-
     public override int JobDammage => 13;
     public override int JobHP => 40;
+    public override int JobSP => 25;
 
 }
