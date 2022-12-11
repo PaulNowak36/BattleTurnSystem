@@ -130,10 +130,9 @@ void SetJob(Character character)
         }
     }
     character.dammage = character.Job.JobDammage;
-    character.HP = character.Job.JobHP;
+    character.maxHP = character.Job.JobHP;
+    character.HP = character.maxHP;
     character.SP = character.Job.JobSP;
-
-
 }
 
 void SetJobless(Character character)
@@ -156,15 +155,16 @@ void SetJobless(Character character)
     var HPInput = Console.ReadLine();
     if (int.TryParse(HPInput, out int value2))
     {
-        character.HP = Convert.ToInt32(HPInput);
+        character.maxHP = Convert.ToInt32(HPInput);
     }
     
     else
     {
-        character.HP = character.defaultHP;
+        character.maxHP = character.defaultHP;
         Text($"Let's say that he has {character.HP} HP, ok ?");
         Thread.Sleep(1000);
     }
+    character.HP = character.maxHP;
 
     Text("Set his SP:");
     var SPInput = Console.ReadLine();
@@ -228,13 +228,25 @@ void BattleMode()
                         Console.ForegroundColor = ConsoleColor.Red;
                         Text("No enough SP for this.");
                         Thread.Sleep(3000);
-
                         break;
                     }
                     else
                     {
-                        Heal();
-                        break;
+                        if (CharacterRoster[order].HP == CharacterRoster[order].maxHP )
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Text("HP is full.");
+                            Thread.Sleep(3000);
+                            break;
+                        }
+
+                        else
+                        {
+                            Heal();
+                            break;
+                        }
+                        
                     }
                 case ConsoleKey.Q:
                     QuitFight();
@@ -282,7 +294,17 @@ void Heal()
     Text("He uses 5 SP and gains 15 HP !");
     Thread.Sleep(1000);
     CharacterRoster[order].SP -= 5;
-    CharacterRoster[order].HP += 15;
+
+    if (CharacterRoster[order].HP + 15 >= CharacterRoster[order].maxHP)
+    {
+        CharacterRoster[order].HP = CharacterRoster[order].maxHP;
+    }
+
+    else
+    {
+        CharacterRoster[order].HP += 15;
+    }
+
 
     OrderSwitch();
     Console.Clear();
@@ -330,6 +352,8 @@ public class Character{
     public int characterNumber;
     public int dammage;
     public int HP;
+
+    public int maxHP;
 
     public int SP;
 
